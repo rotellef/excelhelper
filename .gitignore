@@ -1,0 +1,7 @@
+.settings
+target
+.classpath
+.cache
+.project
+logs
+*.xlsx
