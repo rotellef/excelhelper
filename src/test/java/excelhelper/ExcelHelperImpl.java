@@ -81,17 +81,19 @@ public class ExcelHelperImpl implements ExcelHelper {
         rowPointer++;
     }
 
-    private void printCell(Row row, int colPointer, Object value, StyleType styletype) {
+    private void printCell(Row row, int colPointer, Object content, StyleType styletype) {
+        if(content==null)
+            return;
         Cell cell = row.createCell(colPointer);
-        if (value instanceof Date) {
-            cell.setCellValue((Date) value);
+        if (content instanceof Date) {
+            cell.setCellValue((Date) content);
             cell.setCellStyle(styles.get(StyleType.DATETIME));
-        } else if (value instanceof BigDecimal) {
-            cell.setCellValue(((BigDecimal) value).doubleValue());
-        } else if (value instanceof String) {
-            cell.setCellValue((String) value);
+        } else if (content instanceof BigDecimal) {
+            cell.setCellValue(((BigDecimal) content).doubleValue());
+        } else if (content instanceof String) {
+            cell.setCellValue((String) content);
         } else {
-            cell.setCellValue((Integer) value);
+            cell.setCellValue((Integer) content);
         }
     }
 

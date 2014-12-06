@@ -21,26 +21,26 @@ public class BasicTest {
         helper.printRow(new RowContent().item("hei").item(1234));
         helper.printRow(new RowContent().item("hei").item(new BigDecimal(400.20)));
         helper.printRow(new RowContent().item(new Date()).item(new BigDecimal(400.20)));
-        helper.printRow(new RowContent().item(new Date()).item(new BigDecimal(400.20)));
+        helper.printRow(new RowContent().item(null).item(new BigDecimal(400.20)));
         helper.writeAndClose();
     }
 
-    @Test
-    public void testBig() {
-        LOG.info("big file test");
-        ExcelHelper helper = new ExcelHelperImpl("testBig.xlsx");
-        helper.setTheme(Themes.STANDARD);
-        helper.printHeader(new RowContent().item("Navn").item("Nummer").item("Antall"));
-        helper.printRow(new RowContent().item("hei").item(1234));
-        helper.printRow(new RowContent().item("hei").item(new BigDecimal(400.20)));
-        helper.printRow(new RowContent().item(new Date()).item(new BigDecimal(400.20)));
-        for (int i = 0; i < 3000; i++) {
-            RowContent rowContent = new RowContent();
-            for (int j = 0; j < 100; j++)
-                rowContent = rowContent.item(new BigDecimal(2452.23));
-            helper.printRow(rowContent);
-        }
-        helper.writeAndClose();
-    }
+//    @Test
+//    public void testBig() {
+//        LOG.info("big file test");
+//        ExcelHelper helper = new ExcelHelperImpl("testBig.xlsx");
+//        helper.setTheme(Themes.STANDARD);
+//        helper.printHeader(new RowContent().item("Navn").item("Nummer").item("Antall"));
+//        helper.printRow(new RowContent().item("hei").item(1234));
+//        helper.printRow(new RowContent().item("hei").item(new BigDecimal(400.20)));
+//        helper.printRow(new RowContent().item(new Date()).item(new BigDecimal(400.20)));
+//        for (int i = 0; i < 3000; i++) {
+//            RowContent rowContent = new RowContent();
+//            for (int j = 0; j < 100; j++)
+//                rowContent = rowContent.item(new BigDecimal(2452.23));
+//            helper.printRow(rowContent);
+//        }
+//        helper.writeAndClose();
+//    }
 
 }
