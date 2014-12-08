@@ -1,4 +1,4 @@
-package excelhelper;
+package com.rt.excelhelper;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,9 +17,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import com.rt.excelhelper.ExcelHelper;
-import com.rt.excelhelper.RowContent;
 
 public class ExcelHelperImpl implements ExcelHelper {
     private static final Logger LOG = Logger.getLogger(ExcelHelperImpl.class);
@@ -82,8 +79,7 @@ public class ExcelHelperImpl implements ExcelHelper {
     }
 
     private void printCell(Row row, int colPointer, Object content, StyleType styletype) {
-        if(content==null)
-            return;
+        if (content == null) return;
         Cell cell = row.createCell(colPointer);
         if (content instanceof Date) {
             cell.setCellValue((Date) content);
@@ -120,4 +116,24 @@ public class ExcelHelperImpl implements ExcelHelper {
     public void printHeader(RowContent rowContent) {
         printRow(rowContent.getItems(), StyleType.H1);
     }
+
+    @Override
+    public void printBlockWithSum(Block block) {
+        int blockStartRow = rowPointer;
+        for (RowContent row : block.getBlockContent()) {
+            printRow(row);
+        }
+        printSumRow(blockStartRow, rowPointer - 1, new int[]{2,3,4,5});
+
+    }
+
+    private void printSumRow(int start, int end, int[] colIndexes) {
+        Row row = activeSheet.createRow(rowPointer);
+        for (int colIndex : colIndexes) {
+            Cell cell = row.createCell(colIndex);
+            cell.setCellFormula("SUM(" + HelperUtils.getRange(colIndex, start, end) + ")");
+        }
+    }
+
+
 }
