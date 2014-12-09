@@ -5,11 +5,19 @@ import java.util.List;
 
 public class RowContent {
     private final List<Object> items = new ArrayList<>();
-    public RowContent item(Object o){
+    private F[] formats = new F[]{F.DEFAULT};
+    public RowContent item(final Object o){
         getItems().add(o);
         return this;
     }
     public List<Object> getItems() {
         return items;
+    }
+    public RowContent withFormats(final F...formats){
+        this.formats = formats;
+        return this;
+    }
+    public F[] getFormats () {
+        return formats;
     }
 }

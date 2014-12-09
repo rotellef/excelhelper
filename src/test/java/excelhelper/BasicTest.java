@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.rt.excelhelper.Block;
 import com.rt.excelhelper.ExcelHelper;
 import com.rt.excelhelper.ExcelHelperImpl;
+import com.rt.excelhelper.F;
 import com.rt.excelhelper.RowContent;
 import com.rt.excelhelper.Themes;
 
@@ -18,15 +19,21 @@ public class BasicTest {
     @Test
     public void testSmall() {
         LOG.info("small file test");
-        ExcelHelper helper = new ExcelHelperImpl("testSmall.xlsx");
+        final ExcelHelper helper = new ExcelHelperImpl("testSmall.xlsx");
         helper.setTheme(Themes.STANDARD);
         helper.printHeader(new RowContent().item("Navn").item("Nummer").item("Antall"));
-        helper.printRow(new RowContent().item("hei").item(1234));
+        helper.printRow(new RowContent().item("hei").item(1234).withFormats (F.ITALIC));
         helper.printRow(new RowContent().item("hei").item(new BigDecimal(400.20)));
         helper.printRow(new RowContent().item(new Date()).item(new BigDecimal(400.20)));
         helper.printRow(new RowContent().item(null).item(new BigDecimal(400.20)));
         helper.printBlockWithSum(new Block().withRow(new RowContent().item("block").item("number").item(888)).withRow(
                         new RowContent().item("more block").item(null).item(999)));
+        
+        final RowContent customRow = new RowContent ();
+        for(int i=0; i<200; i++){
+            customRow.item ("hei på deg");
+        }
+        helper.printRow (customRow);
         helper.writeAndClose();
     }
 
