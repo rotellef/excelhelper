@@ -23,7 +23,7 @@ import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 public class ExcelHelperImpl implements ExcelHelper {
-    private static final int ROW_WINDOWS_TO_FLUSH = 100;
+    private static final int ROW_WINDOWS_TO_FLUSH = 50;
     private static final Logger LOG = Logger.getLogger(ExcelHelperImpl.class);
     private final Workbook wb = new SXSSFWorkbook(ROW_WINDOWS_TO_FLUSH);
     private final DataFormat format = wb.createDataFormat();
@@ -32,7 +32,7 @@ public class ExcelHelperImpl implements ExcelHelper {
     private final Font italicFont = wb.createFont ();
     private final Font fatItalicFont = wb.createFont ();
     private final Map<String, CellStyle> styles = new HashMap<>();
-    private final Sheet activeSheet;
+    private Sheet activeSheet;
     private String filePath = "";
     private int rowPointer = 0;
     private Theme theme = Themes.STANDARD;
@@ -202,6 +202,12 @@ public class ExcelHelperImpl implements ExcelHelper {
             final Cell cell = row.createCell(colIndex);
             cell.setCellFormula("SUM(" + HelperUtils.getRange(colIndex, start, end) + ")");
         }
+    }
+
+    @Override
+    public void newSheet (final String name) {
+        activeSheet = wb.createSheet (name);
+        rowPointer = 0;
     }
 
 

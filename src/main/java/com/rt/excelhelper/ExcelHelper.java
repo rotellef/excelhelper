@@ -14,4 +14,6 @@ public interface ExcelHelper {
 
     void printBlockWithSum(Block block);
 
+    void newSheet (String string);
+
 }
